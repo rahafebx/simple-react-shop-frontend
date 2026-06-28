@@ -310,3 +310,46 @@ When it comes to fetching data in React applications, both TanStack Query and SW
 - **TanStack Query** is a more feature-rich library that provides advanced features such as caching, background updates, and query invalidation. It is a great choice for applications that require complex data fetching and state management.
 - **SWR** is a lightweight library that focuses on simplicity and ease of use. It is a good choice for applications that need basic data fetching and caching functionality.
 
+## Tailwind CSS v4 Library with vite
+Tailwind CSS is a utility-first CSS framework that provides a set of pre-defined classes for building responsive and customizable user interfaces. It allows developers to style their components using a set of utility classes, making it easy to create consistent and maintainable designs.
+
+### Installation
+To install Tailwind CSS in a Vite project, you can follow these steps:
+
+1. Install Tailwind CSS and its dependencies:
+
+```bash
+npm install tailwindcss @tailwindcss/vite
+
+```
+
+2. Configure the Vite plugin:
+
+```javascript
+// vite.config.js
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+import tailwindcss from '@tailwindcss/vite';
+
+export default defineConfig({
+  plugins: [react(), tailwindcss()],
+});
+```
+
+3. Import Tailwind CSS in your main CSS file (e.g., `index.css`):
+
+```css
+@import "tailwindcss";
+```
+
+## Lucide Icons Library
+Lucide is a library of open-source icons that provides a wide range of customizable and scalable icons for web and mobile applications. It is designed to be lightweight and easy to use, making it a great choice for developers who want to add icons to their projects without adding unnecessary bloat.
+
+### Installation
+To install Lucide Icons, run the following command in your project directory:
+
+```bash
+npm install lucide-react
+```
+
+
