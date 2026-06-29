@@ -1,18 +1,13 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import Container from "../components/Container";
 import { useForm } from "react-hook-form";
-import { AuthContext } from "../context/AuthContext";
+import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 
 export default function Auth() {
   const navigation = useNavigate();
   const [mode, setMode] = useState("login"); // "login" or "signup"
-  const [user, login, signup, message] = [
-    useContext(AuthContext).user,
-    useContext(AuthContext).login,
-    useContext(AuthContext).signup,
-    useContext(AuthContext).message,
-  ];
+  const { user, login, signup, message } = useAuth();
   const {
     register,
     handleSubmit,
