@@ -54,19 +54,17 @@ export default function Checkout() {
 
   return (
     <>
-      <Breadcrumb items={[
-        { to: "/", label: "Home" },
-        { label: "Checkout" },
-      ]} />
+      <Breadcrumb items={[{ to: "/", label: "Home" }, { label: "Checkout" }]} />
 
       {!isComplete && cartItems.length > 0 ? (
         <Container className="text-gray-900 dark:text-gray-50 py-20">
           <h1 className="text-3xl font-bold mb-10">Checkout</h1>
           <div className="grid grid-cols-1 lg:grid-cols-[repeat(3,_1fr)] gap-16">
             <div className="form lg:col-span-2 order-2 lg:order-1">
-                <p className="mb-6 text-gray-600 dark:text-gray-400">
-                    Please fill in your details below to complete the checkout process.
-                </p>
+              <p className="mb-6 text-gray-600 dark:text-gray-400">
+                Please fill in your details below to complete the checkout
+                process.
+              </p>
               <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
                 <FormField
                   label="Name"
@@ -76,8 +74,14 @@ export default function Checkout() {
                   error={errors.name?.message}
                   registration={register("name", {
                     required: "Name is required",
-                    minLength: { value: 2, message: "Name must be at least 2 characters" },
-                    maxLength: { value: 30, message: "Name must be at most 30 characters" },
+                    minLength: {
+                      value: 2,
+                      message: "Name must be at least 2 characters",
+                    },
+                    maxLength: {
+                      value: 30,
+                      message: "Name must be at most 30 characters",
+                    },
                   })}
                 />
 
@@ -90,7 +94,10 @@ export default function Checkout() {
                   error={errors.email?.message}
                   registration={register("email", {
                     required: "Email is required",
-                    pattern: { value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: "Invalid email address" },
+                    pattern: {
+                      value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                      message: "Invalid email address",
+                    },
                   })}
                 />
 
@@ -101,8 +108,14 @@ export default function Checkout() {
                   error={errors.address?.message}
                   registration={register("address", {
                     required: "Address is required",
-                    minLength: { value: 2, message: "Address must be at least 2 characters" },
-                    maxLength: { value: 150, message: "Address must be at most 150 characters" },
+                    minLength: {
+                      value: 2,
+                      message: "Address must be at least 2 characters",
+                    },
+                    maxLength: {
+                      value: 150,
+                      message: "Address must be at most 150 characters",
+                    },
                   })}
                 />
 
@@ -114,7 +127,10 @@ export default function Checkout() {
                   error={errors.phone?.message}
                   registration={register("phone", {
                     required: "Phone is required",
-                    pattern: { value: /^[0-9]{10}$/, message: "Please enter a valid 10-digit phone number" },
+                    pattern: {
+                      value: /^[0-9]{10}$/,
+                      message: "Please enter a valid 10-digit phone number",
+                    },
                   })}
                 />
 
@@ -125,7 +141,10 @@ export default function Checkout() {
                   placeholder="Enter any additional notes"
                   error={errors.notes?.message}
                   registration={register("notes", {
-                    maxLength: { value: 200, message: "Notes must be at most 200 characters" },
+                    maxLength: {
+                      value: 200,
+                      message: "Notes must be at most 200 characters",
+                    },
                   })}
                 />
 
@@ -195,21 +214,25 @@ export default function Checkout() {
       ) : (
         <>
           {isComplete ? (
-            <div className="text-center py-20 bg-green-900/10 max-w-xl mx-auto mt-20 mb-20 p-8 rounded-lg">
-              <CircleCheckBig className="mx-auto w-16 h-16 text-green-600 mb-4" />
-              <h1 className="text-3xl font-bold mb-4">Order Complete!</h1>
-              <p className="text-lg">
-                Thank you for your order. You will be redirected to the home
-                page shortly.
-              </p>
-            </div>
+            <Container>
+              <div className="text-center py-20 bg-green-900/10 mt-20 mb-20 p-8 rounded-lg">
+                <CircleCheckBig className="mx-auto w-16 h-16 text-green-600 mb-4" />
+                <h1 className="text-3xl font-bold mb-4">Order Complete!</h1>
+                <p className="text-lg">
+                  Thank you for your order. You will be redirected to the home
+                  page shortly.
+                </p>
+              </div>
+            </Container>
           ) : (
-            <div className="text-center py-20 bg-red-900/10 max-w-xl mx-auto mt-20 mb-20 p-8 rounded-lg">
-              <h1 className="text-3xl font-bold mb-4">Your cart is empty</h1>
-              <p className="text-lg">
-                Please add items to your cart before proceeding to checkout.
-              </p>
-            </div>
+            <Container>
+              <div className="text-center py-20 bg-red-900/10 mt-20 mb-20 p-8 rounded-lg">
+                <h1 className="text-3xl font-bold mb-4">Your cart is empty</h1>
+                <p className="text-lg">
+                  Please add items to your cart before proceeding to checkout.
+                </p>
+              </div>
+            </Container>
           )}
         </>
       )}
