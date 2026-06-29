@@ -11,7 +11,7 @@ export default function Navbar() {
         </li>
         <li>
           <Link to="/checkout" className="hover:text-blue-500 transition-colors duration-200">
-            Cart
+            Checkout
           </Link>
         </li>
       </ul>
