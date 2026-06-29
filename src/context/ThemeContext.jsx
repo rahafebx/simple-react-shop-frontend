@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from 'react'
 
-const ThemeContext = createContext()
+export const ThemeContext = createContext(null)
 
 function getInitialTheme() {
   const stored = localStorage.getItem('ebx-theme')
