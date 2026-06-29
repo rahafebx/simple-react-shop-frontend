@@ -1,5 +1,6 @@
 import { Outlet } from "react-router-dom";
-import { ShoppingCart, LogOut} from 'lucide-react'
+import { ShoppingCart, LogOut, Menu, X } from 'lucide-react'
+import { useState } from "react";
 import ThemeToggle from "../components/ThemeToggle";
 import Navbar from "../components/Navbar";
 import { Link } from "react-router-dom";
@@ -12,14 +13,15 @@ export default function MainLayout() {
   const navigation = useNavigate();
   const {user, logout} = useAuth();
   const { totalItems } = useCart();
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <div className="min-h-screen flex flex-col">
       <header className="fixed top-0 left-0 right-0 bg-neutral-100 dark:bg-neutral-950 z-50">
         <Container className="flex items-center justify-between py-4 text-gray-900 dark:text-gray-50">
-          <h1 className="text-xl font-bold">REBEX Shop</h1>
-          <Navbar />
-          <div className="controls flex items-center space-x-3">
+          <h1 className="text-lg sm:text-xl font-bold">REBEX <span className="text-xs text-primary-500 dark:text-primary-400">Shop</span></h1>
+          <Navbar isOpen={isOpen} />
+          <div className="controls flex items-center space-x-3 md:space-x-4">
             <Link to="/cart" className="relative flex items-center justify-center rounded-lg p-2 text-black dark:text-white transition-colors cursor-pointer hover:bg-neutral-200 dark:hover:bg-neutral-900">
               <ShoppingCart size={20} aria-hidden="true" />
               <span className="absolute flex items-center justify-center -top-1 -right-1 w-5 h-5 text-xs bg-primary-500 rounded-full text-white">{totalItems || 0}</span>
@@ -42,6 +44,11 @@ export default function MainLayout() {
               </Link>
             )}
             <ThemeToggle className="hover:bg-neutral-200 dark:hover:bg-neutral-900" />
+            <button className="flex md:hidden items-center justify-center rounded-lg p-2 text-black dark:text-white transition-colors cursor-pointer hover:bg-neutral-200 dark:hover:bg-neutral-900"
+              onClick={() => setIsOpen(!isOpen)}
+            >
+              {isOpen ? (<X size={20} aria-label="close Menu" />) : (<Menu size={20} aria-label="open Menu" />)}
+            </button>
           </div>
         </Container>
       </header>
