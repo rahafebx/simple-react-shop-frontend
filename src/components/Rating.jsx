@@ -1,8 +1,8 @@
 import { Star } from "lucide-react";
 
-export default function Rating({ value, size = "w-4 h-4" }) {
+export default function Rating({ value, size = "w-4 h-4", className = "" }) {
   return (
-    <div className="flex items-center gap-1 justify-center">
+    <div className={`flex items-center gap-1 ${className}`}>
       {Array.from({ length: 5 }, (_, index) => (
         <Star
           key={index}

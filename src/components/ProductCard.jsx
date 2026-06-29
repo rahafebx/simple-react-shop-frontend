@@ -21,7 +21,7 @@ export default function ProductCard({ product }) {
         <img
           src={product.image}
           alt={product.name}
-          className="w-full h-48 object-cover bg-primary-50 dark:bg-primary-950 group-hover:scale-[1.05] group-hover:filter group-hover:blur-[0.09rem] transition-all duration-300"
+          className="w-full h-48 object-cover bg-primary-50 dark:bg-primary-950 group-hover:scale-[1.05] group-hover:filter group-hover:blur-xs transition-all duration-300"
           loading="lazy"
         />
       </div>
@@ -32,7 +32,7 @@ export default function ProductCard({ product }) {
           </Link>
         </h3>
         <div className="mb-4">
-          <Rating value={product.rate} />
+          <Rating value={product.rate} className="justify-center"/>
         </div>
         <p className="mb-4 text-sm text-gray-600 dark:text-gray-400 line-clamp-3">
           {product.description}

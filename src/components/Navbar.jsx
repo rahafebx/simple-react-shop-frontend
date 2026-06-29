@@ -19,7 +19,7 @@ export default function Navbar({ isOpen = false, onClose }) {
             <Link
               to={link.to}
               onClick={onClose}
-              className="hover:text-blue-500 transition-colors duration-200 block px-4 py-3 md:py-4"
+              className="hover:text-blue-500 transition-colors duration-200 block px-4 py-3 md:py-2 font-medium uppercase"
             >
               {link.label}
             </Link>

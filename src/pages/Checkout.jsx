@@ -64,6 +64,9 @@ export default function Checkout() {
           <h1 className="text-3xl font-bold mb-10">Checkout</h1>
           <div className="grid grid-cols-1 lg:grid-cols-[repeat(3,_1fr)] gap-16">
             <div className="form lg:col-span-2 order-2 lg:order-1">
+                <p className="mb-6 text-gray-600 dark:text-gray-400">
+                    Please fill in your details below to complete the checkout process.
+                </p>
               <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
                 <FormField
                   label="Name"
@@ -151,7 +154,8 @@ export default function Checkout() {
             </div>
 
             <div className="details lg:col-start-3 order-1 lg:order-2">
-              <div className="items-table">
+              <div className="items-table text-sm">
+                <h2 className="text-xl font-bold mb-4">Order Details</h2>
                 <table className="w-full border border-gray-200 dark:border-gray-900 rounded-lg shadow-md">
                   <thead className="bg-neutral-100 dark:bg-neutral-950">
                     <tr>

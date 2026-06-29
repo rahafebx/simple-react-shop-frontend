@@ -32,7 +32,7 @@ export default function ProductDetails() {
           <img
             src={product.image}
             alt={product.name}
-            className="w-full h-64 sm:h-72 lg:h-96 object-cover rounded-lg"
+            className="bg-primary-50 dark:bg-primary-950 w-full h-64 sm:h-72 lg:h-96 object-cover rounded-lg"
           />
         </div>
         <div className="product-details flex flex-col">
@@ -43,7 +43,7 @@ export default function ProductDetails() {
           <p className="text-2xl font-bold mb-6 text-primary-500">
             ${product.price.toFixed(2)}
           </p>
-          <p className="text-lg mb-6 grow">{product.description}</p>
+          <p className="text-lg mb-6 grow text-gray-600 dark:text-gray-400">{product.description}</p>
           {product.category && product.category.length > 0 && (
             <div className="mb-6 flex flex-wrap gap-2 items-center">
               <h2 className="text-md font-semibold">Categories:</h2>
