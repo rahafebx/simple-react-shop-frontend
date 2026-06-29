@@ -9,6 +9,11 @@ export default function Navbar() {
             Home
           </Link>
         </li>
+        <li>
+          <Link to="/cart" className="hover:text-blue-500 transition-colors duration-200">
+            Cart
+          </Link>
+        </li>
       </ul>
     </nav>
   );

@@ -1,11 +1,12 @@
 import {
   createContext,
   useState,
-  useContext,
   useEffect,
   useCallback,
 } from "react";
 import { getProducts } from "../data/products";
+
+// eslint-disable-next-line react-refresh/only-export-components
 export const CartContext = createContext(null);
 
 export default function CartProvider({ children }) {
@@ -21,7 +22,7 @@ export default function CartProvider({ children }) {
         localStorage.setItem("cart", JSON.stringify(updatedCart));
       }
       return updatedCart;
-    } catch (e) {
+    } catch {
       return [];
     }
   });
@@ -134,11 +135,3 @@ export default function CartProvider({ children }) {
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 }
-
-export const useCart = () => {
-  const context = useContext(CartContext);
-  if (!context) {
-    throw new Error("useCart must be used within a CartProvider");
-  }
-  return context;
-};

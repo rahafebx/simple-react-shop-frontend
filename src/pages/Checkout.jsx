@@ -1,10 +1,12 @@
-import Container from "../components/Container";
-import { useCart } from "../context/CardContext";
-import { ChevronRight, CircleCheckBig } from "lucide-react";
-import { useForm } from "react-hook-form";
-import { useAuth } from "../context/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
+import { CircleCheckBig } from "lucide-react";
+import { useForm } from "react-hook-form";
+import Container from "../components/Container";
+import FormField from "../components/FormField";
+import Breadcrumb from "../components/Breadcrumb";
+import { useCart } from "../context/useCart";
+import { useAuth } from "../context/useAuth";
 
 export default function Checkout() {
   const { user } = useAuth();
@@ -12,7 +14,6 @@ export default function Checkout() {
   const { cartItems, totalItems, totalPrice, clearCart } = useCart();
   const [isComplete, setIsComplete] = useState(false);
 
-  // Redirect if cart is empty and not in complete state
   useEffect(() => {
     if (cartItems.length === 0 && !isComplete) {
       navigate("/");
@@ -33,45 +34,30 @@ export default function Checkout() {
     },
   });
 
-  const onSubmit = (data) => {
-    // Handle form submission logic here
-    console.log("Form submitted:", data);
-    console.log("Order items:", cartItems);
-    console.log("Total items:", totalItems);
-    console.log("Total price:", totalPrice);
+  const onSubmit = useCallback(() => {
+    clearCart();
+    setIsComplete(true);
+  }, [clearCart]);
 
-    clearCart(); // Clear the cart after successful checkout
-    setIsComplete(true); // Set the checkout completion state to true
-
-    // After 5 seconds redirect to home page
-    const timeoutId = setTimeout(() => {
+  useEffect(() => {
+    if (!isComplete) return;
+    const id = setTimeout(() => {
       setIsComplete(false);
       navigate("/");
     }, 5000);
+    return () => clearTimeout(id);
+  }, [isComplete, navigate]);
 
-    // Cleanup timeout if component unmounts
-    return () => clearTimeout(timeoutId);
-  };
-
-  // If cart is empty and not in complete state, return null (will redirect via useEffect)
   if (cartItems.length === 0 && !isComplete) {
     return null;
   }
 
   return (
     <>
-      <div className="text-gray-900 dark:text-gray-50 bg-primary-50 dark:bg-primary-950 py-10">
-        <p className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 text-sm tracking-wider flex items-center gap-2 font-medium">
-          <a
-            href="/"
-            className="text-primary-600 dark:text-primary-300 hover:text-primary-700 dark:hover:text-primary-200"
-          >
-            Home
-          </a>
-          <ChevronRight className="w-4 h-4" />
-          Checkout
-        </p>
-      </div>
+      <Breadcrumb items={[
+        { to: "/", label: "Home" },
+        { label: "Checkout" },
+      ]} />
 
       {!isComplete && cartItems.length > 0 ? (
         <Container className="text-gray-900 dark:text-gray-50 py-10">
@@ -79,158 +65,66 @@ export default function Checkout() {
           <div className="grid grid-cols-1 lg:grid-cols-[repeat(3,_1fr)] gap-16">
             <div className="form lg:col-span-2 order-2 lg:order-1">
               <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
-                <div className="mb-4">
-                  <label
-                    htmlFor="name"
-                    className="block mb-2 text-sm font-medium"
-                  >
-                    Name
-                  </label>
-                  <input
-                    type="text"
-                    id="name"
-                    defaultValue={user?.name || ""}
-                    placeholder="Enter your name"
-                    className={`block text-sm w-full px-4 py-2 h-12 border rounded-md focus:outline-0 
-                                  ${errors.name ? "border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-500" : "border-gray-300 dark:border-gray-600 focus:border-primary-500 focus:ring-1 focus:ring-primary-500"}
-                                  `}
-                    {...register("name", {
-                      required: "Name is required",
-                      minLength: {
-                        value: 2,
-                        message: "Name must be at least 2 characters",
-                      },
-                      maxLength: {
-                        value: 30,
-                        message: "Name must be at most 30 characters",
-                      },
-                    })}
-                  />
-                  {errors.name && (
-                    <p className="text-red-500 text-sm mt-1">
-                      {errors.name.message}
-                    </p>
-                  )}
-                </div>
+                <FormField
+                  label="Name"
+                  id="name"
+                  placeholder="Enter your name"
+                  defaultValue={user?.name || ""}
+                  error={errors.name?.message}
+                  registration={register("name", {
+                    required: "Name is required",
+                    minLength: { value: 2, message: "Name must be at least 2 characters" },
+                    maxLength: { value: 30, message: "Name must be at most 30 characters" },
+                  })}
+                />
 
-                <div className="mb-4">
-                  <label
-                    htmlFor="email"
-                    className="block mb-2 text-sm font-medium"
-                  >
-                    Email
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    defaultValue={user?.email || ""}
-                    placeholder="Enter your email"
-                    className={`block text-sm w-full px-4 py-2 h-12 border rounded-md focus:outline-0 
-                                  ${errors.email ? "border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-500" : "border-gray-300 dark:border-gray-600 focus:border-primary-500 focus:ring-1 focus:ring-primary-500"}
-                                  `}
-                    {...register("email", {
-                      required: "Email is required",
-                      pattern: {
-                        value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                        message: "Invalid email address",
-                      },
-                    })}
-                  />
-                  {errors.email && (
-                    <p className="text-red-500 text-sm mt-1">
-                      {errors.email.message}
-                    </p>
-                  )}
-                </div>
+                <FormField
+                  label="Email"
+                  id="email"
+                  type="email"
+                  placeholder="Enter your email"
+                  defaultValue={user?.email || ""}
+                  error={errors.email?.message}
+                  registration={register("email", {
+                    required: "Email is required",
+                    pattern: { value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: "Invalid email address" },
+                  })}
+                />
 
-                <div className="mb-4">
-                  <label
-                    htmlFor="address"
-                    className="block mb-2 text-sm font-medium"
-                  >
-                    Address
-                  </label>
-                  <input
-                    type="text"
-                    id="address"
-                    placeholder="Enter your address"
-                    className={`block text-sm w-full px-4 py-2 h-12 border rounded-md focus:outline-0 
-                                  ${errors.address ? "border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-500" : "border-gray-300 dark:border-gray-600 focus:border-primary-500 focus:ring-1 focus:ring-primary-500"}
-                                  `}
-                    {...register("address", {
-                      required: "Address is required",
-                      minLength: {
-                        value: 2,
-                        message: "Address must be at least 2 characters",
-                      },
-                      maxLength: {
-                        value: 150,
-                        message: "Address must be at most 150 characters",
-                      },
-                    })}
-                  />
-                  {errors.address && (
-                    <p className="text-red-500 text-sm mt-1">
-                      {errors.address.message}
-                    </p>
-                  )}
-                </div>
+                <FormField
+                  label="Address"
+                  id="address"
+                  placeholder="Enter your address"
+                  error={errors.address?.message}
+                  registration={register("address", {
+                    required: "Address is required",
+                    minLength: { value: 2, message: "Address must be at least 2 characters" },
+                    maxLength: { value: 150, message: "Address must be at most 150 characters" },
+                  })}
+                />
 
-                <div className="mb-4">
-                  <label
-                    htmlFor="phone"
-                    className="block mb-2 text-sm font-medium"
-                  >
-                    Phone
-                  </label>
-                  <input
-                    type="tel"
-                    id="phone"
-                    placeholder="Enter your phone number"
-                    className={`block text-sm w-full px-4 py-2 h-12 border rounded-md focus:outline-0 
-                                  ${errors.phone ? "border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-500" : "border-gray-300 dark:border-gray-600 focus:border-primary-500 focus:ring-1 focus:ring-primary-500"}
-                                  `}
-                    {...register("phone", {
-                      required: "Phone is required",
-                      pattern: {
-                        value: /^[0-9]{10}$/,
-                        message: "Please enter a valid 10-digit phone number",
-                      },
-                    })}
-                  />
-                  {errors.phone && (
-                    <p className="text-red-500 text-sm mt-1">
-                      {errors.phone.message}
-                    </p>
-                  )}
-                </div>
+                <FormField
+                  label="Phone"
+                  id="phone"
+                  type="tel"
+                  placeholder="Enter your phone number"
+                  error={errors.phone?.message}
+                  registration={register("phone", {
+                    required: "Phone is required",
+                    pattern: { value: /^[0-9]{10}$/, message: "Please enter a valid 10-digit phone number" },
+                  })}
+                />
 
-                <div className="mb-4">
-                  <label
-                    htmlFor="notes"
-                    className="block mb-2 text-sm font-medium"
-                  >
-                    Notes
-                  </label>
-                  <textarea
-                    id="notes"
-                    placeholder="Enter any additional notes"
-                    className={`block text-sm w-full px-4 py-2 h-24 border rounded-md focus:outline-0 
-                                    ${errors.notes ? "border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-500" : "border-gray-300 dark:border-gray-600 focus:border-primary-500 focus:ring-1 focus:ring-primary-500"}
-                                    `}
-                    {...register("notes", {
-                      maxLength: {
-                        value: 200,
-                        message: "Notes must be at most 200 characters",
-                      },
-                    })}
-                  />
-                  {errors.notes && (
-                    <p className="text-red-500 text-sm mt-1">
-                      {errors.notes.message}
-                    </p>
-                  )}
-                </div>
+                <FormField
+                  label="Notes"
+                  id="notes"
+                  type="textarea"
+                  placeholder="Enter any additional notes"
+                  error={errors.notes?.message}
+                  registration={register("notes", {
+                    maxLength: { value: 200, message: "Notes must be at most 200 characters" },
+                  })}
+                />
 
                 <div>
                   {user ? (
@@ -241,7 +135,7 @@ export default function Checkout() {
                       Place Order
                     </button>
                   ) : (
-                    <p className="">
+                    <p>
                       Please{" "}
                       <Link
                         to="/auth"

@@ -4,9 +4,9 @@ import ThemeToggle from "../components/ThemeToggle";
 import Navbar from "../components/Navbar";
 import { Link } from "react-router-dom";
 import Container from "../components/Container";
-import { useAuth } from "./../context/AuthContext";
+import { useAuth } from "../context/useAuth";
 import { useNavigate } from "react-router-dom";
-import { useCart } from "./../context/CardContext";
+import { useCart } from "../context/useCart";
 
 export default function MainLayout() {
   const navigation = useNavigate();

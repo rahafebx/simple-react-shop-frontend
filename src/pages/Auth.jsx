@@ -1,12 +1,13 @@
 import { useState } from "react";
-import Container from "../components/Container";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { useAuth } from "../context/AuthContext";
-import { useNavigate } from "react-router-dom";
+import Container from "../components/Container";
+import FormField from "../components/FormField";
+import { useAuth } from "../context/useAuth";
 
 export default function Auth() {
   const navigation = useNavigate();
-  const [mode, setMode] = useState("login"); // "login" or "signup"
+  const [mode, setMode] = useState("login");
   const { user, login, signup, message } = useAuth();
   const {
     register,
@@ -23,7 +24,7 @@ export default function Auth() {
       isSignupSuccessful = signup(data.email, data.password, data.name);
     }
     if(isLoginSuccessful || isSignupSuccessful) {
-        navigation("/") // redirect to home page after successful login
+        navigation("/")
     }
   };
 
@@ -36,12 +37,12 @@ export default function Auth() {
             You are now logged in. Enjoy shopping at REBEX Shop.
           </p>
           <p className="text-lg mb-6">
-            <a
-              href="/"
+            <Link
+              to="/"
               className="text-primary-500 hover:text-primary-700"
             >
               Continue Shopping
-            </a>
+            </Link>
           </p>
         </Container>
       ) : (
@@ -76,85 +77,43 @@ export default function Auth() {
               )}
               <div className="mb-6">
                 {mode === "signup" && (
-                  <div className="mb-4">
-                    <label
-                      htmlFor="name"
-                      className="block mb-2 text-sm font-medium"
-                    >
-                      Name
-                    </label>
-                    <input
-                      type="text"
-                      id="name"
-                      placeholder="Enter your name"
-                      className={`block text-sm w-full px-4 py-2 h-12 border rounded-md focus:outline-0 
-                    ${errors.name ? "border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-500" : "border-gray-300 dark:border-gray-600 focus:border-primary-500 focus:ring-1 focus:ring-primary-500"}
-                    `}
-                      {...register("name", { required: "Name is required", minLength: { value: 2, message: "Name must be at least 2 characters" }, maxLength: { value: 30, message: "Name must be at most 30 characters" } })}
-                    />
-                    {errors.name && (
-                      <p className="text-red-500 text-sm mt-1">
-                        {errors.name.message}
-                      </p>
-                    )}
-                  </div>
+                  <FormField
+                    label="Name"
+                    id="name"
+                    placeholder="Enter your name"
+                    error={errors.name?.message}
+                    registration={register("name", {
+                      required: "Name is required",
+                      minLength: { value: 2, message: "Name must be at least 2 characters" },
+                      maxLength: { value: 30, message: "Name must be at most 30 characters" },
+                    })}
+                  />
                 )}
-                <label
-                  htmlFor="email"
-                  className="block mb-2 text-sm font-medium"
-                >
-                  Email
-                </label>
-                <input
-                  type="email"
+                <FormField
+                  label="Email"
                   id="email"
+                  type="email"
                   placeholder="Enter your email"
-                  className={`block text-sm w-full px-4 py-2 h-12 border rounded-md focus:outline-0 
-                ${errors.email ? "border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-500" : "border-gray-300 dark:border-gray-600 focus:border-primary-500 focus:ring-1 focus:ring-primary-500"}
-                `}
-                  {...register("email", { required: "Email is required", pattern: { value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: "Invalid email address" } })}
+                  error={errors.email?.message}
+                  registration={register("email", {
+                    required: "Email is required",
+                    pattern: { value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: "Invalid email address" },
+                  })}
                 />
-                {errors.email && (
-                  <p className="text-red-500 text-sm mt-1">
-                    {errors.email.message}
-                  </p>
-                )}
               </div>
               <div className="mb-6">
-                <label
-                  htmlFor="password"
-                  className="block mb-2 text-sm font-medium"
-                >
-                  Password
-                </label>
-                <input
-                  type="password"
+                <FormField
+                  label="Password"
                   id="password"
+                  type="password"
                   placeholder="Enter your password"
-                  className={`block text-sm w-full px-4 py-2 h-12 border rounded-md focus:outline-0 focus:ring-1 focus:ring-primary-500 focus:border-primary-500
-                ${errors.password ? "border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-500" : "border-gray-300 dark:border-gray-600"}
-                `}
-                  {...register(
-                    "password",
-                    {
-                      minLength: {
-                        value: 6,
-                        message: "Password must be at least 6 characters",
-                      },
-                      maxLength: {
-                        value: 12,
-                        message: "Password must be at most 12 characters",
-                      },
-                      required: "Password is required"
-                    },
-                      
-                  )}
+                  error={errors.password?.message}
+                  registration={register("password", {
+                    minLength: { value: 6, message: "Password must be at least 6 characters" },
+                    maxLength: { value: 12, message: "Password must be at most 12 characters" },
+                    required: "Password is required",
+                  })}
                 />
-                {errors.password && (
-                  <p className="text-red-500 text-sm mt-1">
-                    {errors.password.message}
-                  </p>
-                )}
               </div>
               <button
                 type="submit"
