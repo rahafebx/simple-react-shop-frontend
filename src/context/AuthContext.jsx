@@ -1,6 +1,6 @@
-import { createContext, useState, useContext } from "react";
-import { set } from "react-hook-form";
+import { createContext, useState } from "react";
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const AuthContext = createContext(null);
 
 export default function AuthProvider({ children }) {
@@ -10,7 +10,7 @@ export default function AuthProvider({ children }) {
       const users = JSON.parse(localStorage.getItem("users")) || [];
       const authenticatedUser = users.find((u) => u.isAuth === true);
       return authenticatedUser || null;
-    } catch (e) {
+    } catch {
       return null;
     }
   });
@@ -92,10 +92,4 @@ export default function AuthProvider({ children }) {
       {children}
     </AuthContext.Provider>
   );
-}
-
-export function useAuth() {
-  const ctx = useContext(AuthContext);
-  if (!ctx) throw new Error("useAuth must be used within AuthProvider");
-  return ctx;
 }

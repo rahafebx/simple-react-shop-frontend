@@ -9,14 +9,14 @@ export default function Home() {
     <>
       <Container as="section" className="text-center py-20">
         <h1 className="text-4xl font-bold mb-4">Welcome to REBEX Shop</h1>
-        <p className="text-lg mb-6">
+        <p className="text-lg mb-6 text-gray-600 dark:text-gray-400">
           Discover the best products at unbeatable prices. Shop now and enjoy
           exclusive deals!
         </p>
       </Container>
-      <Container as="section" className="text-center py-20">
+      <Container as="section" className="text-center py-20 pt-0">
         <h2 className="text-3xl font-bold mb-4">Featured Products</h2>
-        <p className="text-lg mb-6">
+        <p className="text-lg mb-6 text-gray-600 dark:text-gray-400">
           Check out our top picks and find your next favorite item.
         </p>
 
