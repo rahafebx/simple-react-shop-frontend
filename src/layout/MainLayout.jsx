@@ -22,7 +22,7 @@ export default function MainLayout() {
           <h1 className="text-lg sm:text-xl font-bold"><Link to="/">REBEX <span className="text-xs md:text-sm lg:text-lg text-primary-600 dark:text-primary-400">Shop</span></Link></h1>
           <Navbar isOpen={isOpen} onClose={() => setIsOpen(false)} />
           <div className="controls flex items-center space-x-3 md:space-x-4">
-            <Link to="/cart" className="relative flex items-center justify-center rounded-lg p-2 text-black dark:text-white transition-colors cursor-pointer hover:bg-neutral-200 dark:hover:bg-neutral-900">
+            <Link to="/cart" className="relative flex items-center justify-center rounded-lg p-2 text-black dark:text-white transition-colors cursor-pointer hover:bg-neutral-200 dark:hover:bg-neutral-900" aria-label="Shopping Cart">
               <ShoppingCart size={20} aria-hidden="true" />
               {totalItems > 0 && (
                 <span className="absolute flex items-center justify-center -top-1 -right-1 w-5 h-5 text-xs bg-primary-500 rounded-full text-white">{totalItems}</span>

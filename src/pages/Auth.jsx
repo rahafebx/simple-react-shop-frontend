@@ -31,7 +31,7 @@ export default function Auth() {
   return (
     <>
       {user ? (
-        <Container className="text-center pt-20 bp-8 text-gray-900 dark:text-gray-50">
+        <Container className="text-center pt-20 bp-20 text-gray-900 dark:text-gray-50">
           <h1 className="text-4xl font-bold mb-4">Welcome, {user.name}!</h1>
           <p className="text-lg mb-6">
             You are now logged in. Enjoy shopping at REBEX Shop.
@@ -59,7 +59,7 @@ export default function Auth() {
 
           <Container
             as="section"
-            className="py-8 text-gray-900 dark:text-gray-50"
+            className="py-8 pb-20 text-gray-900 dark:text-gray-50"
           >
             <form
               onSubmit={handleSubmit(onSubmit)}

@@ -60,7 +60,7 @@ export default function Checkout() {
       ]} />
 
       {!isComplete && cartItems.length > 0 ? (
-        <Container className="text-gray-900 dark:text-gray-50 py-10">
+        <Container className="text-gray-900 dark:text-gray-50 py-20">
           <h1 className="text-3xl font-bold mb-10">Checkout</h1>
           <div className="grid grid-cols-1 lg:grid-cols-[repeat(3,_1fr)] gap-16">
             <div className="form lg:col-span-2 order-2 lg:order-1">
@@ -195,7 +195,7 @@ export default function Checkout() {
       ) : (
         <>
           {isComplete ? (
-            <div className="text-center py-20 bg-green-900/10 max-w-xl mx-auto mt-16 p-8 rounded-lg">
+            <div className="text-center py-20 bg-green-900/10 max-w-xl mx-auto mt-20 mb-20 p-8 rounded-lg">
               <CircleCheckBig className="mx-auto w-16 h-16 text-green-600 mb-4" />
               <h1 className="text-3xl font-bold mb-4">Order Complete!</h1>
               <p className="text-lg">
@@ -204,7 +204,7 @@ export default function Checkout() {
               </p>
             </div>
           ) : (
-            <div className="text-center py-20 bg-red-900/10 max-w-xl mx-auto mt-16 p-8 rounded-lg">
+            <div className="text-center py-20 bg-red-900/10 max-w-xl mx-auto mt-20 mb-20 p-8 rounded-lg">
               <h1 className="text-3xl font-bold mb-4">Your cart is empty</h1>
               <p className="text-lg">
                 Please add items to your cart before proceeding to checkout.
