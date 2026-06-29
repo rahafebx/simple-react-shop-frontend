@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useContext } from "react";
 
 export const AuthContext = createContext(null);
 
@@ -31,9 +31,12 @@ export default function AuthProvider({ children }) {
     }
 
     const newUser = { ...userData, isAuth: true };
+    const updatedUsers = [
+      ...users.map((user) => ({ ...user, isAuth: false })),
+      newUser,
+    ];
     setUser(newUser);
-    users.push(newUser);
-    localStorage.setItem("users", JSON.stringify(users));
+    localStorage.setItem("users", JSON.stringify(updatedUsers));
   };
 
   const login = (email, password) => {
@@ -43,11 +46,11 @@ export default function AuthProvider({ children }) {
     );
 
     if (storedUser) {
-      setUser({ ...storedUser, isAuth: true });
-      // Update the isAuth property of the logged-in user to true
-      const updatedUsers = users.map((user) =>
-        user.email === email ? { ...user, isAuth: true } : user,
-      );
+      const updatedUsers = users.map((user) => ({
+        ...user,
+        isAuth: user.email === email,
+      }));
+      setUser(updatedUsers.find((user) => user.email === email) || null);
       localStorage.setItem("users", JSON.stringify(updatedUsers));
     } else {
       setMessage({
@@ -72,4 +75,11 @@ export default function AuthProvider({ children }) {
       {children}
     </AuthContext.Provider>
   );
+}
+
+
+export function useAuth() {
+  const ctx = useContext(AuthContext);
+  if (!ctx) throw new Error("useAuth must be used within AuthProvider");
+  return ctx;
 }
