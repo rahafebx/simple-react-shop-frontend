@@ -21,7 +21,7 @@ export default function Cart() {
       <Breadcrumb
         items={[{ to: "/", label: "Home" }, { label: "Shopping Cart" }]}
       />
-      <Container className="text-gray-900 dark:text-gray-50 py-10">
+      <Container className="text-gray-900 dark:text-gray-50 py-20">
         <h1 className="text-3xl font-bold mb-10">Shopping Cart</h1>
         {cartItems.length === 0 ? (
           <div className="text-center py-20 bg-primary-900/10 max-w-xl mx-auto mt-16 p-8 rounded-lg">
@@ -58,11 +58,9 @@ export default function Cart() {
                         onClick={() =>
                           updateQuantity(item.id, item.quantity - 1)
                         }
+                        aria-label="Decrease quantity"
                       >
-                        <Minus
-                          className="w-4 h-4"
-                          aria-label="Decrease quantity"
-                        />
+                        <Minus className="w-4 h-4" aria-hidden="true" />
                       </button>
                       <span className="h-8 w-8 inline-flex items-center justify-center">
                         {item.quantity}
@@ -72,11 +70,9 @@ export default function Cart() {
                         onClick={() =>
                           updateQuantity(item.id, item.quantity + 1)
                         }
+                        aria-label="Increase quantity"
                       >
-                        <Plus
-                          className="w-4 h-4"
-                          aria-label="Increase quantity"
-                        />
+                        <Plus className="w-4 h-4" aria-hidden="true" />
                       </button>
                     </p>
                   </div>
@@ -84,8 +80,9 @@ export default function Cart() {
                     <button
                       className="text-sm bg-transparent text-red-500 h-8 w-8 inline-flex items-center justify-center rounded hover:text-red-600 transition-colors duration-200 cursor-pointer"
                       onClick={() => removeItemCompletely(item.id)}
+                      aria-label="Remove item"
                     >
-                      <X className="w-6 h-6" aria-label="Remove item" />
+                      <X className="w-6 h-6" aria-hidden="true" />
                     </button>
                   </div>
                 </div>
