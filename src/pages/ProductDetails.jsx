@@ -4,6 +4,7 @@ import { getProductById } from "../data/products";
 import Rating from "../components/Rating";
 import Breadcrumb from "../components/Breadcrumb";
 import Container from "../components/Container";
+import Price from "../components/Price";
 import { useCart } from "../context/useCart";
 
 export default function ProductDetails() {
@@ -40,9 +41,7 @@ export default function ProductDetails() {
           <div className="mb-6">
             <Rating value={product.rate} size="w-5 h-5" />
           </div>
-          <p className="text-2xl font-bold mb-6 text-primary-500">
-            ${product.price.toFixed(2)}
-          </p>
+          <Price price={product.price} discount={product.discount} className="mb-6" />
           <p className="text-lg mb-6 grow text-gray-600 dark:text-gray-400">{product.description}</p>
           {product.category && product.category.length > 0 && (
             <div className="mb-6 flex flex-wrap gap-2 items-center">
