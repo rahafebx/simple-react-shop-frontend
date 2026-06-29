@@ -4,6 +4,7 @@ import { getProducts } from "../data/products";
 
 export default function Home() {
     const products = getProducts();
+
   return (
     <>
       <Container as="section" className="text-center py-20">

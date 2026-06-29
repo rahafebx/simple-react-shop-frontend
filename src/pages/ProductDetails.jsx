@@ -4,10 +4,12 @@ import { useState, useEffect } from "react";
 import { getProductById } from "../data/products"; // Assuming you have a function to fetch product details
 import { useNavigate } from "react-router-dom";
 import Container from "../components/Container";
+import { useCart } from "../context/CardContext";
 export default function ProductDetails() {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const navigate = useNavigate();
+  const { isProductInCart, addToCart } = useCart();
   // Fetch product details based on the ID
   useEffect(() => {
     const fetchProductDetails = async () => {
@@ -58,7 +60,10 @@ export default function ProductDetails() {
               ${product.price.toFixed(2)}
             </p>
             <p className="text-lg mb-6 grow">{product.description}</p>
-            <button className="text-sm w-full sm:w-fit bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors duration-200 cursor-pointer">
+            <button
+              className="text-sm w-full sm:w-fit bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors duration-200 cursor-pointer"
+              onClick={() => addToCart(product)}
+            >
               Add to Cart
             </button>
           </div>

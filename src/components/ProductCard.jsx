@@ -1,6 +1,9 @@
 import { Link } from "react-router-dom";
+import { useCart } from "../context/CardContext"
 
-export default function ProductCard({ product, onAddToCart }) {
+export default function ProductCard({ product }) {
+  const { addToCart } = useCart();
+
   return (
     <div
       key={product.id}
@@ -28,7 +31,7 @@ export default function ProductCard({ product, onAddToCart }) {
         <p className="text-lg font-bold">${product.price.toFixed(2)}</p>
         <button 
           className="text-sm bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors duration-200 cursor-pointer"
-          onClick={() => onAddToCart(product)}
+          onClick={() => addToCart(product)}
         >
           Add to Cart
         </button>
