@@ -30,13 +30,13 @@ export default function MainLayout() {
                 onClick={() => {logout(), navigation("/")}}
                 className="flex items-center justify-center rounded-lg p-2 text-black dark:text-white transition-colors cursor-pointer hover:bg-neutral-200 dark:hover:bg-neutral-900"
               >
-                <LogOut size={20} aria-hidden="true" />
+                <LogOut size={20} aria-label="Logout" />
               </button>
               </>
             ) : (
               <Link
                 to="/auth"
-                className="bg-blue-500 text-white px-4 py-2 text-sm rounded hover:bg-blue-600 transition-colors duration-200"
+                className="bg-primary-500 text-white px-4 py-2 text-sm rounded hover:bg-primary-600 transition-colors duration-200"
               >
                 Get Started
               </Link>

@@ -14,12 +14,15 @@ export default function Auth() {
     formState: { errors },
   } = useForm();
   const onSubmit = (data) => {
+    let isLoginSuccessful = false;
+    let isSignupSuccessful = false;
+
     if (mode === "login") {
-      login(data.email, data.password);
+      isLoginSuccessful = login(data.email, data.password);
     } else {
-      signup(data.email, data.password, data.name);
+      isSignupSuccessful = signup(data.email, data.password, data.name);
     }
-    if(!message.content) {
+    if(isLoginSuccessful || isSignupSuccessful) {
         navigation("/") // redirect to home page after successful login
     }
   };
@@ -35,7 +38,7 @@ export default function Auth() {
           <p className="text-lg mb-6">
             <a
               href="/"
-              className="text-blue-500 hover:text-blue-700"
+              className="text-primary-500 hover:text-primary-700"
             >
               Continue Shopping
             </a>
@@ -85,7 +88,7 @@ export default function Auth() {
                       id="name"
                       placeholder="Enter your name"
                       className={`block text-sm w-full px-4 py-2 h-12 border rounded-md focus:outline-0 
-                    ${errors.name ? "border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-500" : "border-gray-300 dark:border-gray-600 focus:border-blue-500 focus:ring-1 focus:ring-blue-500"}
+                    ${errors.name ? "border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-500" : "border-gray-300 dark:border-gray-600 focus:border-primary-500 focus:ring-1 focus:ring-primary-500"}
                     `}
                       {...register("name", { required: "Name is required", minLength: { value: 2, message: "Name must be at least 2 characters" }, maxLength: { value: 30, message: "Name must be at most 30 characters" } })}
                     />
@@ -107,7 +110,7 @@ export default function Auth() {
                   id="email"
                   placeholder="Enter your email"
                   className={`block text-sm w-full px-4 py-2 h-12 border rounded-md focus:outline-0 
-                ${errors.email ? "border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-500" : "border-gray-300 dark:border-gray-600 focus:border-blue-500 focus:ring-1 focus:ring-blue-500"}
+                ${errors.email ? "border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-500" : "border-gray-300 dark:border-gray-600 focus:border-primary-500 focus:ring-1 focus:ring-primary-500"}
                 `}
                   {...register("email", { required: "Email is required", pattern: { value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: "Invalid email address" } })}
                 />
@@ -128,7 +131,7 @@ export default function Auth() {
                   type="password"
                   id="password"
                   placeholder="Enter your password"
-                  className={`block text-sm w-full px-4 py-2 h-12 border rounded-md focus:outline-0 focus:ring-1 focus:ring-blue-500 focus:border-blue-500
+                  className={`block text-sm w-full px-4 py-2 h-12 border rounded-md focus:outline-0 focus:ring-1 focus:ring-primary-500 focus:border-primary-500
                 ${errors.password ? "border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-500" : "border-gray-300 dark:border-gray-600"}
                 `}
                   {...register(
@@ -155,7 +158,7 @@ export default function Auth() {
               </div>
               <button
                 type="submit"
-                className="block mx-auto bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors duration-200 cursor-pointer"
+                className="block mx-auto bg-primary-500 text-white px-4 py-2 rounded hover:bg-primary-600 transition-colors duration-200 cursor-pointer"
               >
                 {mode === "login" ? "Log In" : "Sign Up"}
               </button>
@@ -166,7 +169,7 @@ export default function Auth() {
                 ? "Don't have an account?"
                 : "Already have an account?"}{" "}
               <button
-                className="text-blue-500 cursor-pointer hover:underline"
+                className="text-primary-500 dark:text-primary-400 cursor-pointer hover:underline"
                 onClick={() => setMode(mode === "login" ? "signup" : "login")}
               >
                 {mode === "login" ? "Sign Up" : "Log In"}
