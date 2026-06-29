@@ -6,9 +6,12 @@ import { Link } from "react-router-dom";
 import Container from "../components/Container";
 import { useAuth } from "./../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { useCart } from "./../context/CardContext";
+
 export default function MainLayout() {
   const navigation = useNavigate();
   const {user, logout} = useAuth();
+  const { totalItems } = useCart();
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -19,7 +22,7 @@ export default function MainLayout() {
           <div className="controls flex items-center space-x-3">
             <Link to="/cart" className="relative flex items-center justify-center rounded-lg p-2 text-black dark:text-white transition-colors cursor-pointer hover:bg-neutral-200 dark:hover:bg-neutral-900">
               <ShoppingCart size={20} aria-hidden="true" />
-              <span className="absolute flex items-center justify-center -top-1 -right-1 w-5 h-5 text-xs bg-primary-500 rounded-full text-white">4</span>
+              <span className="absolute flex items-center justify-center -top-1 -right-1 w-5 h-5 text-xs bg-primary-500 rounded-full text-white">{totalItems || 0}</span>
             </Link>
             {user ? (
               <>
