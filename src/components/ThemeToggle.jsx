@@ -19,7 +19,7 @@ export default function ThemeToggle({ className = '' }) {
       aria-label={`Switch to ${next.label}`}
       title={current.label}
     >
-      <current.icon size={18} aria-hidden="true" />
+      <current.icon size={20} aria-hidden="true" />
     </button>
   )
 }

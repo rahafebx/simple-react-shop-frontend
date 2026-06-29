@@ -13,7 +13,7 @@ export default function ProductCard({ product, onAddToCart }) {
         className="w-full h-48 object-cover bg-primary-50 dark:bg-primary-950"
         loading="lazy"
       />
-      <div className="p-4 flex-grow">
+      <div className="p-4 grow">
         <h3 className="text-xl font-bold mb-2">
           <Link to={`/products/${product.id}`} className="hover:underline">
             {product.name}

@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState } from "react";
 
 export const AuthContext = createContext(null);
 
@@ -34,7 +34,6 @@ export default function AuthProvider({ children }) {
     setUser(newUser);
     users.push(newUser);
     localStorage.setItem("users", JSON.stringify(users));
-    window.location.href = "/"; // redirect to home page after successful signup
   };
 
   const login = (email, password) => {
@@ -50,7 +49,6 @@ export default function AuthProvider({ children }) {
         user.email === email ? { ...user, isAuth: true } : user,
       );
       localStorage.setItem("users", JSON.stringify(updatedUsers));
-      window.location.href = "/"; // redirect to home page after successful login
     } else {
       setMessage({
         content: "Invalid email or password.",
