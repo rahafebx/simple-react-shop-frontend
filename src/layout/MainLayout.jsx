@@ -4,16 +4,12 @@ import ThemeToggle from "../components/ThemeToggle";
 import Navbar from "../components/Navbar";
 import { Link } from "react-router-dom";
 import Container from "../components/Container";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 export default function MainLayout() {
   const navigation = useNavigate();
   const {user, logout} = useContext(AuthContext);
-
-  useEffect(() => {
-    console.log("Current user:", user);
-  }, [user]);
 
   return (
     <div className="min-h-screen flex flex-col">
