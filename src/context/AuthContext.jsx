@@ -1,4 +1,5 @@
 import { createContext, useState, useContext } from "react";
+import { set } from "react-hook-form";
 
 export const AuthContext = createContext(null);
 
@@ -27,7 +28,7 @@ export default function AuthProvider({ children }) {
         content: "User already exists, please log in instead.",
         type: "error",
       });
-      return;
+      return false;
     }
 
     const newUser = { ...userData, isAuth: true };
@@ -37,6 +38,11 @@ export default function AuthProvider({ children }) {
     ];
     setUser(newUser);
     localStorage.setItem("users", JSON.stringify(updatedUsers));
+    setMessage({
+      content: "",
+      type: "",
+    });
+    return true;
   };
 
   const login = (email, password) => {
@@ -52,11 +58,17 @@ export default function AuthProvider({ children }) {
       }));
       setUser(updatedUsers.find((user) => user.email === email) || null);
       localStorage.setItem("users", JSON.stringify(updatedUsers));
+      setMessage({
+        content: "",
+        type: "",
+      });
+      return true;
     } else {
       setMessage({
         content: "Invalid email or password.",
         type: "error",
       });
+      return false;
     }
   };
 
@@ -67,7 +79,12 @@ export default function AuthProvider({ children }) {
       user.isAuth ? { ...user, isAuth: false } : user,
     );
     localStorage.setItem("users", JSON.stringify(updatedUsers));
+    setMessage({
+      content: "",
+      type: "",
+    });
     setUser(null);
+    return true;
   };
 
   return (
@@ -76,7 +93,6 @@ export default function AuthProvider({ children }) {
     </AuthContext.Provider>
   );
 }
-
 
 export function useAuth() {
   const ctx = useContext(AuthContext);
